@@ -6,7 +6,7 @@ def install(package):
     subprocess.check_call([sys.executable, '-m', 'pip', 'install', package])
 
 # Lista de pacotes que precisamos verificar e instalar
-packages = ['fastapi', 'uvicorn', 'httpx']
+packages = ['fastapi', 'uvicorn', 'httpx', 'statbotics']
 
 # Verificar e instalar dependências
 missing_packages = []

@@ -10,10 +10,3 @@ IF ERRORLEVEL 1 (
     pause
     exit /b
 )
-
-REM Navegar para o diretório onde o proxy.py está localizado
-cd /d "%~dp0resources\app"
-
-REM Iniciar o servidor FastAPI
-echo Iniciando o servidor FastAPI...
-start "" python -m uvicorn proxy:app --host 127.0.0.1 --port 8000

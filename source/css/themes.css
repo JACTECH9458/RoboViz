@@ -1,0 +1,53 @@
+/* Light mode styles */
+body.light-mode {
+    background-color: #f4f4f9;
+    color: #333;
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+.table-container.light-mode {
+    background: #fff;
+    color: #333;
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+table.light-mode th {
+    background-color: #34c759;
+    color: #fff;
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+table.light-mode tr:nth-child(odd) {
+    background-color: #f9f9f9;
+}
+
+table.light-mode tr:nth-child(even) {
+    background-color: #ffffff;
+}
+
+/* Dark mode styles */
+body.dark-mode {
+    background-color: #333;
+    color: #f4f4f9;
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+.table-container.dark-mode {
+    background: #444;
+    color: #f4f4f9;
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+table.dark-mode th {
+    background-color: #2f6e3e;
+    color: #fff;
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+table.dark-mode tr:nth-child(odd) {
+    background-color: #666;
+}
+
+table.dark-mode tr:nth-child(even) {
+    background-color: #777;
+}

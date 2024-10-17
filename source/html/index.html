@@ -4,11 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Electron App</title>
+    <title>Robo Viz</title>
+    <link rel="stylesheet" href="../css/table.css">
+    <link rel="stylesheet" href="../css/sort.css">
+    <link rel="stylesheet" href="../css/themes.css">
 </head>
 <body>
-    <h1>Team Information</h1>
-    <table id="team-table" border="1">
+    <div class="table-label">
+        <div class="icon-text-wrapper">
+            <img src="../icons/roboviz_icon.ico" alt="icon" width="25%" height="25%">
+            <h1>Robo Viz</h1>
+        </div>
+        <button id="toggle-mode">Toggle</button>
+    </div>
+    <table id="team-table" class="table-container" border="1">
         <thead id="table-header">
             <tr>
                 <!-- Headers will be populated here -->
@@ -22,4 +31,5 @@
 </body>
 
     <script src="../javascript/pythonListerer.js"></script>
+    <script src="../javascript/theme.js"></script>
 </html>

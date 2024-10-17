@@ -1,75 +1,98 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const { spawn } = require('child_process');
 const path = require('path');
+const fs = require('fs');  // Import the file system module
 
-let mainWindow; // Declare mainWindow in a scope accessible to all functions
+let mainWindow;
+let savedData = [];  // Array to store the team data
+let lastTeamId = 0;  // Track the last processed team ID
+
+const dataFilePath = path.join(__dirname, 'team_data.json');  // Path to save JSON data
+
+// Load previously saved data if available
+function loadSavedData() {
+    if (fs.existsSync(dataFilePath)) {
+        const fileData = fs.readFileSync(dataFilePath);
+        const parsedData = JSON.parse(fileData);
+        savedData = parsedData.teams || [];
+        lastTeamId = parsedData.lastTeamId || 0;
+    }
+}
+
+// Save data to a JSON file
+function saveDataToFile() {
+    const jsonData = {
+        teams: savedData,
+        lastTeamId: lastTeamId
+    };
+    fs.writeFileSync(dataFilePath, JSON.stringify(jsonData, null, 2));
+}
 
 function createWindow() {
-  // Create the browser window.
-  mainWindow = new BrowserWindow({
-    width: 800,    // Width of the window
-    height: 600,   // Height of the window
-    webPreferences: {
-      nodeIntegration: true,  // Enable Node.js integration
-      contextIsolation: false, // Disable context isolation for simplicity
-    },
-  });
+    mainWindow = new BrowserWindow({
+        width: 800,
+        height: 600,
+        icon: path.join(__dirname, 'source/icons/roboviz_icon.ico'), // Set the path to your icon
+        webPreferences: {
+            nodeIntegration: true,
+            contextIsolation: false,
+        },
+    });
 
-  // Load a URL or HTML file into the window.
-  mainWindow.loadFile('source/html/index.html'); // Replace with your HTML file
+    mainWindow.loadFile('source/html/index.html');
 
-  // Start the Python server after the window is created
-  startPythonStatbotics();
+    mainWindow.maximize();
+    // Send saved data to the renderer process after loading the window
+    mainWindow.webContents.on('did-finish-load', () => {
+        mainWindow.webContents.send('load-saved-data', savedData);
+    });
+
+    mainWindow.on('close', () => {
+        saveDataToFile();
+    });
 }
 
-// Function to start the Python server
 function startPythonStatbotics() {
-  // Path to your Python script using __dirname
-  const scriptPath = path.join(__dirname, 'statboticsAPI.py'); // Replace with the actual path
+    const scriptPath = path.join(__dirname, 'statboticsAPI.py');
+    const pythonProcess = spawn('python', [scriptPath, lastTeamId]);  // Pass lastTeamId to Python script
 
-  // Spawn the Python process
-  const pythonProcess = spawn("python", [scriptPath]);
+    pythonProcess.stdout.on('data', (data) => {
+        const output = data.toString();
+        const jsonObjects = output.split('\n').filter(line => line.trim() !== '');
 
-  // Handle data from the Python process
-  pythonProcess.stdout.on('data', (data) => {
-    const output = data.toString(); // Convert Buffer to String
-    try {
-      const jsonData = JSON.parse(output); // Parse JSON data
-      // Check if mainWindow is defined before sending data
-      if (mainWindow) {
-        mainWindow.webContents.send('data-from-python', jsonData); // Send data to renderer process
-      } else {
-        console.error('mainWindow is not defined yet.');
-      }
-    } catch (error) {
-      console.error('Error parsing JSON:', error);
-    }
-  });
-
-  // Handle any error output from the Python process
-  pythonProcess.stderr.on('data', (data) => {
-    console.error(`stderr: ${data}`);
-  });
-
-  // Log when the Python process exits
-  pythonProcess.on('close', (code) => {
-    console.log(`Python process exited with code ${code}`);
-  });
+        jsonObjects.forEach(jsonData => {
+            try {
+                const parsedData = JSON.parse(jsonData);
+                
+                // Only push active teams and update lastTeamId
+                if (parsedData.team.active) {
+                    savedData.push(parsedData.team);
+                    lastTeamId = parsedData.team.team;
+                    
+                    // Send data to the renderer to display in the table
+                    mainWindow.webContents.send('data-from-python', parsedData.team);
+                }
+            } catch (error) {
+                console.error('Error parsing JSON:', error);
+            }
+        });
+    });
 }
 
-// This method will be called when Electron has finished initialization
-app.whenReady().then(createWindow);
-
-// Quit when all windows are closed, except on macOS
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit();
-  }
+app.whenReady().then(() => {
+    loadSavedData();  // Load saved data on app start
+    createWindow();
+    startPythonStatbotics();
 });
 
-// Re-create a window in the app when the dock icon is clicked (macOS specific)
+app.on('window-all-closed', () => {
+    if (process.platform !== 'darwin') {
+        app.quit();
+    }
+});
+
 app.on('activate', () => {
-  if (BrowserWindow.getAllWindows().length === 0) {
-    createWindow();
-  }
+    if (BrowserWindow.getAllWindows().length === 0) {
+        createWindow();
+    }
 });

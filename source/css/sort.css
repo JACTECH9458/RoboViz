@@ -1,0 +1,11 @@
+th {
+    cursor: pointer; /* Change cursor to pointer for sortable headers */
+}
+
+.sort-asc::after {
+    content: ' ↑'; /* Arrow for ascending sort */
+}
+
+.sort-desc::after {
+    content: ' ↓'; /* Arrow for descending sort */
+}

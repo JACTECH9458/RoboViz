@@ -1,0 +1,141 @@
+/* Reset some default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-wrap: nowrap;
+}
+
+/* Body styling */
+body {
+    font-family: 'Arial', sans-serif; /* Font for the entire page */
+    background-color: #f4f4f9; /* Light background color */
+    color: #333; /* Dark text color for contrast */
+    line-height: 1.6; /* Better line spacing */
+    padding: 20px; /* Add some padding */
+    width: 100%;
+}
+
+.icon-text-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px; /* Space between the header and the table */
+}
+
+/* Style the H1 header */
+h1 {
+    font-size: 2em;
+    color: #333; /* Default text color */
+    text-align: center;
+    transition: color 0.3s ease; /* Smooth transition for color change in dark mode */
+}
+
+/* Dark mode header color */
+body.dark-mode h1 {
+    color: #f4f4f9; /* Light text in dark mode */
+}
+
+/* Style the toggle button */
+#toggle-mode {
+    display: block;
+    margin: 20px 0; /* Center the button */
+    padding: 10px 20px;
+    background-color: #34c759; /* Light mode button color */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition for hover and theme changes */
+}
+
+#toggle-mode:hover {
+    background-color: #2f6e3e; /* Darker green on hover */
+}
+
+/* Dark mode button styling */
+body.dark-mode #toggle-mode {
+    background-color: #666; /* Dark mode button background */
+    color: #f4f4f9; /* Light text in dark mode */
+}
+
+body.dark-mode #toggle-mode:hover {
+    background-color: #888; /* Lighter hover color in dark mode */
+}
+
+
+/* Container for the table */
+.table-container {
+    max-width: 1200px; /* Limit the width of the container */
+    margin: 0 auto; /* Center the container */
+    background: #fff; /* White background for the table */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    overflow: hidden; /* Ensure no overflow from rounded corners */
+}
+
+/* Table styling */
+table {
+    width: 100%; /* Full width */
+    border-collapse: collapse; /* Merge table borders */
+}
+
+/* Header styling */
+th {
+    background-color: #34C759; /* Header background color */
+    color: #fff; /* White text color */
+    padding: 15px; /* Padding inside header */
+    text-align: left; /* Align text to the left */
+    cursor: pointer; /* Pointer cursor for clickable headers */
+}
+
+/* Header hover effect */
+th:hover {
+    background-color: #2f6e3e; /* Darker shade on hover */
+}
+
+/* Data cell styling */
+td {
+    padding: 12px; /* Padding inside data cells */
+    border-bottom: 1px solid #ddd; /* Bottom border for cells */
+}
+
+/* Odd row background color */
+tr:nth-child(odd) {
+    background-color: #f9f9f9; /* Light gray background for odd rows */
+}
+
+/* Even row background color */
+tr:nth-child(even) {
+    background-color: #ffffff; /* White background for even rows */
+}
+
+/* Row hover effect */
+tr:hover {
+    background-color: #f1f1f1; /* Light gray on hover for entire row */
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+    body {
+        padding: 10px; /* Reduce padding on small screens */
+    }
+
+    .table-container {
+        padding: 10px; /* Reduce padding inside the container */
+    }
+
+    th, td {
+        padding: 10px; /* Reduce padding in cells */
+    }
+}
+
+.table-label {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+}

@@ -1,5 +1,14 @@
 {
-  "devDependencies": {
-    "electron": "^33.0.1"
+  "name": "robo-viz",
+  "version": "1.0.0",
+  "description": "Jactech-RoboViz is an application that collects real-time data from robots and displays the information in a clean, user-friendly interface.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Jactech",
+  "license": "MIT",
+  "dependencies": {
+    "electron": "^26.2.0"
   }
 }

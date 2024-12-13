@@ -84359,6 +84359,30 @@
       "full_ties": 7,
       "full_count": 380,
       "full_winrate": 0.4671
+    },
+    {
+      "team": 9992,
+      "name": "9992",
+      "offseason": true,
+      "state": null,
+      "country": null,
+      "district": null,
+      "rookie_year": null,
+      "active": true,
+      "norm_epa": 1402,
+      "norm_epa_recent": 1384,
+      "norm_epa_mean": 1364,
+      "norm_epa_max": 1402,
+      "wins": 0,
+      "losses": 2,
+      "ties": 0,
+      "count": 2,
+      "winrate": 0,
+      "full_wins": 174,
+      "full_losses": 199,
+      "full_ties": 7,
+      "full_count": 380,
+      "full_winrate": 0.4671
     }
   ],
   "lastTeamId": 9992
